@@ -1,0 +1,132 @@
+<?xml version="1.0"?>
+<pset>
+
+    <!--
+        CS 564, Fall 2021
+        PROBLEM SET 2 SUBMISSION TEMPLATE
+
+        Please copy and paste your SQL queries (and potentially Python and Latex code) 
+	into the appropriate spots below. 
+
+        When submitting SQL queries, please do not include the intitial 
+        %sql or %%sql IPython commands. Just include the SQL code.
+
+        DO NOT DELETE THE <![CDATA[ ... ]]> LINES IN EACH <answer> TAG!
+        Doing so will break the autograder. To avoid accidentally breaking
+        something, please leave all existing comments in this template
+        intact in your submission.
+    -->
+
+    <student>
+        <name>
+           Dawson Bauer
+            
+        </name>
+        <netid>
+           djbauer2
+
+        </netid>
+        <studentid>
+           9078157287
+        </studentid>
+    </student>
+
+
+    <!-- BEGIN PROBLEM 1 -->
+    <answer number="1a">
+        <!-- Paste your solution to problem 1, part (a) below this line. --><![CDATA[
+            SELECT provider FROM hospital
+            WHERE provider IN 
+                (SELECT provider
+                FROM hospital
+                GROUP BY provider HAVING COUNT(*) > 1);
+
+
+        ]]><!-- End problem 1, part (a). -->
+    </answer>
+    <answer number="1b">
+        <!-- Paste your solution to problem 1, part (b) below this line. --><![CDATA[
+            SELECT zip, city, state 
+            FROM hospital 
+            GROUP BY zip HAVING COUNT(DISTINCT city) > 1 OR COUNT(DISTINCT State) > 1;
+
+
+        ]]><!-- End problem 1, part (b). -->
+    </answer>
+    <!-- END PROBLEM 1 -->
+
+
+    <!-- BEGIN PROBLEM 2 -->
+    <answer number="2a">
+        <!-- Paste your solution to problem 2, part (a) below this line. --><![CDATA[
+        answer = True
+        explanation = " We can indetify of of the tuples in the schema of the database using A,B so it's a superkey."
+
+        ]]><!-- End problem 2, part (a). -->
+    </answer>
+    <answer number="2b">
+        <!-- Paste your solution to problem 2, part (b) below this line. --><![CDATA[
+        answer = False
+        explanation = "Aren't any rows that can represent the relation after using Chases Algorithm. "
+
+
+        ]]><!-- End problem 2, part (b). -->
+    </answer>    
+    <answer number="2c">
+        <!-- Paste your solution to problem 2, part (c) below this line. --><![CDATA[
+        answer = True
+        explanation = "The union of the projections is preserved so none of the FDs are lost."
+
+
+        ]]><!-- End problem 2, part (c). -->
+    </answer>
+    <answer number="2d">
+        <!-- Paste your solution to problem 2, part (d) below this line. --><![CDATA[
+        answer = True
+        explanation = "Aren't any rows that can represent the relation after using Chases Algorithm. "
+
+
+        ]]><!-- End problem 2, part (d). -->
+    </answer>
+    <answer number="2e">
+        <!-- Paste your solution to problem 2, part (e) below this line. --><![CDATA[
+        answer = False
+        explanation = "Since D is not a superkey, then not every functional dependency has a superkey so can't be in BCNF. "
+
+
+        ]]><!-- End problem 2, part (e). -->
+    </answer>
+    <!-- END PROBLEM 2 -->
+
+    <!-- BEGIN PROBLEM 3 -->
+    <answer number="3a">
+        <!-- Paste your solution to problem 3, part (a) below this line. --><![CDATA[
+
+
+        $$\pi_{name}(\sigma_{affiliation="UW-Madison"}(Person)\bowtie_{pid}(Author)\bowtie_{artid}((Article)\bowtie_{confid}(\sigma_{year = "2019"}(Conference))))$$ 
+
+        ]]><!-- End problem 3, part (a). -->
+    </answer>
+    <answer number="3b">
+        <!-- Paste your solution to problem 3, part (b) below this line. --><![CDATA[
+
+        $$\pi_{name}(\sigma_{name="John\,Doe"}((Person)\bowtie_{pid}((Author)\bowtie_{artid}(Article)))-\pi_{pid}(\sigma_{name="John\,Doe"}(Person)))
+
+        ]]><!-- End problem 3, part (b). -->
+    </answer>
+    <answer number="3c">
+        <!-- Paste your solution to problem 3, part (c) below this line. --><![CDATA[
+
+        $$\pi_{count(pid)}((Author)\bowtie_{artid}(Article)\bowtie_{confid}((\sigma_{year = "2018", name = "SIGMOD"}(Conference)))-((Author)\bowtie_{artid}(Article)\bowtie_{confid}((\sigma_{year = "2019"}(Conference)))))
+
+        ]]><!-- End problem 3, part (c). -->
+    </answer>
+    <answer number="3d">
+    <!-- Paste your solution to problem 3, part (d) below this line. --><![CDATA[
+    $$\pi_{pid, count(artid)}\gamma_{pid}((Author)\bowtie_{artid}((Article)\bowtie_{confid}(\sigma_{name = "Sigma"}(Conference))))
+
+        ]]><!-- End problem 3, part (d). -->
+    </answer>
+    <!-- END PROBLEM 3 -->
+
+</pset>

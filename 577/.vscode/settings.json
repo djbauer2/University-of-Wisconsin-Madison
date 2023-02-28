@@ -1,0 +1,32 @@
+{
+    "files.associations": {
+        "graph": "cpp",
+        "__bit_reference": "cpp",
+        "__functional_base": "cpp",
+        "__node_handle": "cpp",
+        "algorithm": "cpp",
+        "atomic": "cpp",
+        "bitset": "cpp",
+        "chrono": "cpp",
+        "__memory": "cpp",
+        "optional": "cpp",
+        "functional": "cpp",
+        "iterator": "cpp",
+        "limits": "cpp",
+        "locale": "cpp",
+        "memory": "cpp",
+        "ratio": "cpp",
+        "system_error": "cpp",
+        "tuple": "cpp",
+        "type_traits": "cpp",
+        "vector": "cpp",
+        "istream": "cpp"
+    },
+    "java.project.sourcePaths": [
+        "Week7",
+        "Week6",
+        "Week4",
+        "Week3",
+        "Week10"
+    ]
+}

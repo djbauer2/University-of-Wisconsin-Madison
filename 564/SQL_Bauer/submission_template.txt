@@ -1,0 +1,215 @@
+<?xml version="1.0"?>
+<pset>
+
+    <!--
+        CS 564, FALL 2021
+        PROBLEM SET 1 SUBMISSION TEMPLATE
+
+        Please copy and paste your SQL queries into the appropriate spots below. 
+
+        When submitting SQL queries, please do not include the initial 
+        %sql or %%sql IPython commands. Just include the SQL code.
+
+        DO NOT DELETE THE <![CDATA[ ... ]]> LINES IN EACH <answer> TAG!
+        Doing so will break the autograder. To avoid accidentally breaking
+        something, please leave all existing comments in this template
+        intact in your submission.
+    -->
+
+    <student>
+        <name>
+           Dawson Bauer
+            
+        </name>
+        <netid>
+            djbauer2
+
+        </netid>
+        <studentid>
+            9078157287
+        </studentid>
+    </student>
+
+
+    <!-- BEGIN PROBLEM 1 -->
+    <answer number="1a">
+        <!-- Paste your solution to problem 1, part (a) below this line. --><![CDATA[
+
+    %%sql
+    SELECT A.i, B.j, SUM(A.val + B.val) AS val 
+    FROM A,B 
+    WHERE A.i = B.i AND A.j = B.j GROUP BY A.i, B.j;
+
+        ]]><!-- End problem 1, part (a). -->
+    </answer>
+    <answer number="1b">
+        <!-- Paste your solution to problem 1, part (b) below this line. --><![CDATA[
+       
+    %%sql SELECT SUM(A.val * B.val) 
+    FROM A,B 
+    WHERE A.j = 2 AND B.j = 1 AND A.i = B.i;
+
+
+        ]]><!-- End problem 1, part (b). -->
+    </answer>
+    <answer number="1c">
+        <!-- Paste your solution to problem 1, part (c) below this line. --><![CDATA[
+
+    %%sql 
+    SELECT A.i, B.j, SUM(A.val * B.val) AS val 
+    FROM A,B 
+    WHERE A.j = B.i GROUP BY A.i, B.j;
+
+        ]]><!-- End problem 1, part (c). -->
+    </answer>
+    <answer number="1d">
+        <!-- Paste your solution to problem 1, part (d) below this line. --><![CDATA[
+
+    %%sql
+    WITH B(val) as 
+    (  
+        SELECT A.val as val
+        FROM A
+    ),
+    C(square) as 
+    (  
+        SELECT SUM (A.val*B.val) as square
+        FROM A
+            JOIN B on A.val
+    )
+
+    SELECT A.i, A.j, SUM (A.val* C.square) as value
+    FROM A, B
+        JOIN C on A.val
+    GROUP BY A.i, A.j;   
+
+        ]]><!-- End problem 1, part (d). -->
+    </answer>
+    <!-- END PROBLEM 1 -->
+
+
+    <!-- BEGIN PROBLEM 2 -->
+    <answer number="2a">
+        <!-- Paste your solution to problem 2, part (a) below this line. --><![CDATA[
+
+    %%sql
+    WITH StoreSales (Store, Sales) as (
+    SELECT Store, SUM(WeeklySales)
+    FROM Sales
+        JOIN Holidays on Sales.WeekDate = Holidays.WeekDate
+    WHERE Holidays.IsHoliday = 'TRUE' GROUP BY Store
+    )
+    SELECT Store, Sales as AllSales
+    FROM StoreSales
+    WHERE Sales in (SELECT MAX(Sales)
+                FROM StoreSales);
+
+        ]]><!-- End problem 2, part (a). -->
+    </answer>
+    <answer number="2b">
+        <!-- Paste your solution to problem 2, part (b) below this line. --><![CDATA[
+
+    %%sql
+    WITH HolidaySales AS 
+        (
+            SELECT WeeklySales
+            FROM Sales, Holidays
+            WHERE Holidays.WeekDate = Sales.WeekDate
+            AND Holidays.IsHoliday = 'TRUE'
+        ),
+        NonHolidaySales(WeeklySales, total) AS 
+        (
+            SELECT WeeklySales, SUM(WeeklySales)
+            FROM Sales, Holidays
+            WHERE Holidays.WeekDate = Sales.WeekDate
+            AND Holidays.IsHoliday = 'FALSE'
+        )
+    SELECT COUNT(WeeklySales) as NumNonHolidays
+    FROM NonHolidaySales
+    GROUP BY WeeklySales
+    HAVING total > 
+    (
+        SELECT AVG(WeeklySales)
+        FROM HolidaySales
+    );
+
+
+        ]]><!-- End problem 2, part (b). -->
+    </answer>
+    <answer number="2c">
+        <!-- Paste your solution to problem 2, part (c) below this line. --><![CDATA[
+    
+    %%sql
+    SELECT Type, SUM (WeeklySales) as TotalSales
+    FROM Stores
+        JOIN Sales on Sales.Store = Stores.Store
+    WHERE substr (Sales.WeekDate, 6, 2) IN ('06','07','08') GROUP BY Type;
+
+
+        ]]><!-- End problem 2, part (c). -->
+    </answer>
+    <!-- END PROBLEM 2 -->
+
+
+    <!-- BEGIN PROBLEM 3 -->
+    <answer number="3a">
+        <!-- Paste your solution to problem 3, part (a) below this line. --><![CDATA[
+    
+    %%sql
+    SELECT B AS company, d AS distance 
+    FROM streets 
+    WHERE A = "UW-Madison" AND d < 10
+    UNION
+    SELECT DISTINCT st2.B AS company, st1.d + st2.d as distance
+    FROM streets st1, streets st2
+    WHERE st1.A = "UW-Madison" AND st1.d + st2.d < 10 AND st1.B = st2.A AND st2.B != st1.A
+    UNION
+    SELECT DISTINCT st3.B AS company, st1.d + st2.d + st3.d as distance
+    FROM streets st1, streets st2, streets st3
+    WHERE st1.A = "UW-Madison" AND st1.d + st2.d + st3.d < 10 AND st1.B = st2.A AND st2.B != st1.A
+    AND st2.B = st3.A AND st3.B != st2.A AND st3.B != st1.A;
+
+
+        ]]><!-- End problem 3, part (a). -->
+    </answer>
+    <answer number="3b">
+        <!-- Paste your solution to problem 3, part (b) below this line. --><![CDATA[
+
+     %%sql
+    DROP VIEW IF EXISTS route;
+    CREATE VIEW route AS
+    SELECT DISTINCT A, B, d AS distance
+    FROM streets
+    UNION
+    SELECT DISTINCT st1.A, st2.B, st1.d +st2.d AS distance
+    FROM streets st1, streets st2
+    WHERE st1.B = st2.A;
+
+    SELECT DISTINCT route1.B AS company_1, route2.B AS company_2 , MIN(route1.distance + route2.distance) as distance
+    FROM route route1, route route2
+    WHERE route1.B > route2.B AND route1.A = "UW-Madison" AND route2.A = "UW-Madison"
+    GROUP BY route1.B, route2.B
+    HAVING MIN(route1.distance + route2.distance) <=15;
+
+        ]]><!-- End problem 3, part (b). -->
+    </answer>
+    <answer number="3c">
+        <!-- Paste your solution to problem 3, part (c) below this line. --><![CDATA[
+    %%sql
+    DROP VIEW IF EXISTS route;
+    CREATE VIEW route AS 
+    SELECT DISTINCT st1.A, st3.B, st1.d +st2.d + st3.d AS distance
+    FROM streets st1, streets st2, streets st3
+    WHERE st1.B = st2.A AND st2.B = st3.A AND st3.B = st1.A AND st1.id != st2.id AND st2.id != st3.id AND st1.id != st3.id;
+
+    SELECT DISTINCT route1.B AS A, route2.B AS B, route3.B AS C, MIN(route1.distance) as distance
+    FROM route route1, route route2, route route3
+    WHERE route1.B != route2.B AND route2.B != route3.B AND route1.B != route3.B;
+
+
+        ]]><!-- End problem 3, part (c). -->
+    </answer>
+    <!-- END PROBLEM 3 -->
+
+
+</pset>

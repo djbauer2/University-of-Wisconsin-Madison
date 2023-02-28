@@ -1,0 +1,12 @@
+I decided to choose BST data structure for my final submission. This was partially because it was hinted at 
+in the assigment doc, but also because I feel the most comfortable coding these, and I know it would be 
+time complexity efficient for the requirements. I did consider using a Self-Balancing BST at one point, but
+I got lost in the coding about how to Balance a tree of strings without worsening my time complexity. 
+
+Locate Command:
+
+best case: O(1)
+average case: O(log n)
+worst case: O(n)
+
+space complexity: O(n)

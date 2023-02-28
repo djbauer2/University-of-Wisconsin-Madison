@@ -1,0 +1,36 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Launch Bipartite",
+            "request": "launch",
+            "mainClass": "Bipartite",
+            "projectName": "577_71e40ec8"
+        },
+        {
+            "type": "java",
+            "name": "Launch NetworkFlow",
+            "request": "launch",
+            "mainClass": "NetworkFlow",
+            "projectName": "577_71e40ec8"
+        },
+        {
+            "type": "java",
+            "name": "Launch DP",
+            "request": "launch",
+            "mainClass": "DP",
+            "projectName": "577_71e40ec8"
+        },
+        {
+            "type": "java",
+            "name": "Launch Pairs",
+            "request": "launch",
+            "mainClass": "Pairs",
+            "projectName": "577_71e40ec8"
+        }
+    ]
+}
